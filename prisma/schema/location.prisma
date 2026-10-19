@@ -1,0 +1,20 @@
+
+model ServiceLocation {
+  id           String   @id @default(uuid()) @db.Uuid
+  label        String?
+  addressLine  String
+  area         String?
+  ward         String?
+  city         String
+  postalCode   String?
+  latitude     Decimal? @db.Decimal(10, 7)
+  longitude    Decimal? @db.Decimal(10, 7)
+  landmark     String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  complaints Complaint[]
+
+  @@index([city, area, ward])
+  @@index([latitude, longitude])
+}

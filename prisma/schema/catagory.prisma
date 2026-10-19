@@ -1,0 +1,16 @@
+model Category {
+  id              String   @id @default(uuid()) @db.Uuid
+  departmentId    String   @db.Uuid
+  name            String
+  description     String?
+  defaultSlaHours Int      @default(72)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  department Department  @relation(fields: [departmentId], references: [id], onDelete: Restrict)
+  complaints Complaint[]
+
+  @@unique([departmentId, name])
+  @@index([departmentId, isActive])
+}

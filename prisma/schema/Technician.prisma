@@ -1,0 +1,14 @@
+model TechnicianUpdate {
+  id          String   @id @default(uuid()) @db.Uuid
+  complaintId String   @db.Uuid
+  authorId    String   @db.Uuid
+  message     String
+  workMinutes Int?
+  createdAt   DateTime @default(now())
+
+  complaint Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Restrict)
+
+  @@index([complaintId, createdAt])
+  @@index([authorId, createdAt])
+}

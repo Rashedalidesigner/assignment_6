@@ -1,0 +1,15 @@
+model ComplaintStatusHistory {
+  id          String          @id @default(uuid()) @db.Uuid
+  complaintId String          @db.Uuid
+  changedById String?         @db.Uuid
+  fromStatus  ComplaintStatus?
+  toStatus    ComplaintStatus
+  note        String?
+  createdAt   DateTime        @default(now())
+
+  complaint Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+  changedBy User?     @relation("StatusChangedBy", fields: [changedById], references: [id], onDelete: SetNull)
+
+  @@index([complaintId, createdAt])
+  @@index([changedById, createdAt])
+}

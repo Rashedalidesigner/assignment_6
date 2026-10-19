@@ -1,0 +1,26 @@
+model User {
+  id              String     @id @default(uuid()) @db.Uuid
+  fullName        String
+  email           String     @unique
+  phone           String?    @unique
+  passwordHash    String
+  role            UserRole   @default(CITIZEN)
+  isActive        Boolean    @default(true)
+  emailVerifiedAt DateTime?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  memberships        DepartmentMembership[]
+  submittedComplaints Complaint[]             @relation("ComplaintCreator")
+  assignmentsReceived ComplaintAssignment[]   @relation("AssignmentAssignee")
+  assignmentsMade     ComplaintAssignment[]   @relation("AssignmentMaker")
+  statusChanges       ComplaintStatusHistory[] @relation("StatusChangedBy")
+  uploadedAttachments Attachment[]             @relation("AttachmentUploader")
+  technicianUpdates   TechnicianUpdate[]
+  notifications      Notification[]
+  feedbackGiven      Feedback[]                @relation("FeedbackAuthor")
+  auditLogs           AuditLog[]                @relation("AuditActor")
+
+  @@index([role, isActive])
+  @@index([createdAt])
+}

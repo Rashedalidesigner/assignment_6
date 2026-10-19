@@ -1,0 +1,70 @@
+enum UserRole {
+  CITIZEN
+  DEPARTMENT_STAFF
+  TECHNICIAN
+  DEPARTMENT_MANAGER
+  CITY_ADMIN
+}
+
+enum DepartmentRole {
+  STAFF
+  TECHNICIAN
+  MANAGER
+}
+
+enum ComplaintStatus {
+  SUBMITTED
+  UNDER_REVIEW
+  ASSIGNED
+  IN_PROGRESS
+  ON_HOLD
+  RESOLVED
+  CLOSED
+  REJECTED
+  REOPENED
+}
+
+enum ComplaintPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum AssignmentStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum AttachmentType {
+  IMAGE
+  DOCUMENT
+  VIDEO
+  OTHER
+}
+
+enum NotificationType {
+  COMPLAINT_CREATED
+  STATUS_CHANGED
+  ASSIGNED
+  COMMENT_ADDED
+  SLA_WARNING
+  SLA_BREACHED
+  RESOLVED
+  FEEDBACK_RECEIVED
+  SYSTEM
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  LOGIN
+  LOGOUT
+  ASSIGN
+  STATUS_CHANGE
+  RESOLVE
+  REOPEN
+  OTHER
+}

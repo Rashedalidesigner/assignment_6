@@ -1,0 +1,20 @@
+model ComplaintAssignment {
+  id             String           @id @default(uuid()) @db.Uuid
+  complaintId    String           @db.Uuid
+  assigneeId     String           @db.Uuid
+  assignedById   String           @db.Uuid
+  status         AssignmentStatus @default(ACTIVE)
+  note           String?
+  assignedAt     DateTime         @default(now())
+  acceptedAt     DateTime?
+  completedAt    DateTime?
+  unassignedAt   DateTime?
+
+  complaint Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+  assignee  User      @relation("AssignmentAssignee", fields: [assigneeId], references: [id], onDelete: Restrict)
+  assignedBy User     @relation("AssignmentMaker", fields: [assignedById], references: [id], onDelete: Restrict)
+
+  @@index([complaintId, status])
+  @@index([assigneeId, status, assignedAt])
+  @@index([assignedById, assignedAt])
+}
