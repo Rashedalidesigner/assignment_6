@@ -68,3 +68,14 @@ enum AuditAction {
   REOPEN
   OTHER
 }
+
+enum AuthProvider {
+  GOOGLE
+  EMAIL
+}
+
+enum Status {
+  ACTIVE 
+  BLOCKED
+  DELETED
+}

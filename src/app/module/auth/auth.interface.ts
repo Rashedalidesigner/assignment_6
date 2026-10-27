@@ -1,17 +1,15 @@
-import type { Role } from "../../../generated/prisma/browser";
+import type { UserRole } from "../../../../prisma/generated/prisma/client";
 
 export interface ILoginUserPayload {
 	email: string;
 	password: string;
 }
 
-export interface IRegisterPatientPayload {
-	name: string;
+export interface IRegistercitizenPayload {
+	fullname: string;
 	email: string;
 	password: string;
-	patient: {
-		contactNumber?: string;
-	};
+	phone?:string;
 }
 export interface IVerifyEmailPayload {
 	email: string;
@@ -21,8 +19,8 @@ export interface IVerifyEmailPayload {
 export interface IRequestUser {
 	userId: string;
 	email: string;
-	name: string;
-	role: Role;
+	fullname: string;
+	role: UserRole;
 }
 
 export interface IGoogleLoginPayload {

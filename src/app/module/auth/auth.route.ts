@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { Role } from "../../../generated/prisma/enums";
+import { UserRole } from "../../../../prisma/generated/prisma/enums";
 import { auth } from "../../middleware/checkAuth";
 import { validateRequest } from "../../middleware/validateRequest";
 import { AuthController } from "./auth.controller";
@@ -9,30 +9,6 @@ const router = Router();
 
 router.post(
   "/register",
-  // (req : Request, res : Response, next : NextFunction) => {
-
-  // 	try {
-  // 		// const payload = req.body ? req.body : {}
-  // 		const payload = req.body ?? {}
-
-  // 		const result = PatientValidation.PatientRegistrationZodSchema.safeParse(payload);
-
-  // 		if (!result.success) {
-  // 			console.log(result.error);
-  // 			console.log(result.error.issues);
-
-  // 			throw new Error(result.error.issues[0].message)
-  // 		}
-
-  // 		req.body = result.data
-
-  // 		next()
-  // 	} catch (error) {
-
-  // 		next(error)
-  // 	}
-  // },
-
   validateRequest(UserValidation.PatientRegistrationZodSchema),
   AuthController.registerPatient,
 );
@@ -48,7 +24,7 @@ router.post(
 );
 router.get(
   "/me",
-  auth(Role.ADMIN, Role.DOCTOR, Role.PATIENT, Role.SUPER_ADMIN),
+  auth(UserRole.CITIZEN,UserRole.CITY_ADMIN,UserRole.DEPARTMENT_MANAGER,UserRole.DEPARTMENT_STAFF,UserRole.TECHNICIAN),
   // validateRequest
   AuthController.getMe,
 );
