@@ -1,26 +1,25 @@
 import { prisma } from "../../lib/prisma";
+import { Department } from "./department.interface";
 
 const getDepartment = async ()=>{
     const result = await prisma.department.findMany();
     return result;
 }
 
-const createDepartment = async (payload:any)=>{
-    const {name,description,code,email,phone} = payload;
+const createDepartment = async (payload:Department)=>{
+    const {name,description,code} = payload;
     const result = await prisma.department.create({
         data:{
             name,
             description,
-            code,
-            email,
-            phone
+            code
         }
     });
     return result;
 }
 
-const updateDepartment = async (payload:any,id:string)=>{
-    const {name,description,code,email,phone} = payload;
+const updateDepartment = async (payload:Department,id:string)=>{
+    const {name,description,code} = payload;
     const result = await prisma.department.update({
         where:{
             id
@@ -29,8 +28,6 @@ const updateDepartment = async (payload:any,id:string)=>{
             name,
             description,
             code,
-            email,
-            phone
         }
     });
     return result;

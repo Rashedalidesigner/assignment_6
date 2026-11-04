@@ -1,11 +1,12 @@
 import { prisma } from "../../lib/prisma";
+import { Feedback } from "./feedback.interface";
 
 const getFeedback = async ()=>{
     const result = await prisma.feedback.findMany();
     return result;
 }
 
-const createFeedback = async (payload:any)=>{
+const createFeedback = async (payload:Feedback)=>{
     const {complaintId,authorId,rating,comment} = payload;
     const result = await prisma.feedback.create({
         data:{
@@ -18,7 +19,7 @@ const createFeedback = async (payload:any)=>{
     return result;
 }
 
-const updateFeedback = async (payload:any,id:string)=>{
+const updateFeedback = async (payload:Feedback,id:string)=>{
     const {rating,comment} = payload;
     const result = await prisma.feedback.update({
         where:{

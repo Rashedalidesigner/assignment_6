@@ -7,7 +7,7 @@ const getComplaint = async ()=>{
 };
 
 const createComplaint = async (payload:Complaint)=>{
-    const {id,ticketNumber,title,description,status,priority,citizenId,categoryId,locationId,departmentId} = payload;
+    const {title,description,citizenId,categoryId,locationId,departmentId} = payload;
     const result = await prisma.complaint.create({
         data:{
             title,
