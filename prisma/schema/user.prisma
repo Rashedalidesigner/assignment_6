@@ -21,7 +21,7 @@ model User {
   assignmentsMade     ComplaintAssignment[]    @relation("AssignmentMaker")
   statusChanges       ComplaintStatusHistory[] @relation("StatusChangedBy")
   uploadedAttachments Attachment[]             @relation("AttachmentUploader")
-  technicianUpdates   TechnicianUpdate[]
+  technicianUpdates   Technician[]
   notifications       Notification[]
   feedbackGiven       Feedback[]               @relation("FeedbackAuthor")
   auditLogs           AuditLog[]               @relation("AuditActor")

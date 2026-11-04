@@ -2,55 +2,56 @@ import { Request, Response } from "express";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import httpStatus from "http-status";
+import { LocationServices } from "./location.service";
 
 
-const getFeedback = catchAsync(async (req:Request,res:Response)=>{
-    const result = await FeedbackServices.getFeedback();
-
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Feedback retrieved successfully",
-    data: result,
-  });
-})
-const createFeedback = catchAsync(async (req:Request,res:Response)=>{
-    const result = await FeedbackServices.createFeedback(req.body);
+const getLocation = catchAsync(async (req:Request,res:Response)=>{
+    const result = await LocationServices.getLocation();
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Feedback created successfully",
+    message: "Location retrieved successfully",
     data: result,
   });
 })
-const updateFeedback = catchAsync(async (req:Request,res:Response)=>{
+const createLocation = catchAsync(async (req:Request,res:Response)=>{
+    const result = await LocationServices.createLocation(req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Location created successfully",
+    data: result,
+  });
+})
+const updateLocation = catchAsync(async (req:Request,res:Response)=>{
     const id = req.params;
-    const result = await FeedbackServices.updateFeedback(req.body, id as unknown as string);
+    const result = await LocationServices.updateLocation(req.body, id as unknown as string);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Feedback updated successfully",
+    message: "Location updated successfully",
     data: result,
   });
 })
-const deleteFeedback = catchAsync(async (req:Request,res:Response)=>{
+const deleteLocation = catchAsync(async (req:Request,res:Response)=>{
     const id = req.params;
-    const result = await FeedbackServices.deleteFeedback(id as unknown as string);
+    const result = await LocationServices.deleteLocation(id as unknown as string);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Feedback deleted successfully",
+    message: "Location deleted successfully",
     data: result,
   });
 })
 
 
-export const FeedbackController = {
-    getFeedback,
-    createFeedback,
-    updateFeedback,
-    deleteFeedback
+export const LocationController = {
+    getLocation,
+    createLocation,
+    updateLocation,
+    deleteLocation
 }

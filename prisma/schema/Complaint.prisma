@@ -27,7 +27,6 @@ model Complaint {
   assignments  ComplaintAssignment[]
   statusHistory ComplaintStatusHistory[]
   attachments  Attachment[]
-  technicianUpdates TechnicianUpdate[]
   feedback     Feedback?
   notifications Notification[]
   auditLogs    AuditLog[]
