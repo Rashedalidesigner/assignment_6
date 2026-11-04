@@ -606,7 +606,7 @@ const resetPassword = async (payload: IResetPasswordPayload) => {
       email: isUserExist.email,
     },
     data: {
-      password: hashedNewPassword,
+      passwor: hashedNewPassword,
     },
   });
 

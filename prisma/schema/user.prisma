@@ -5,6 +5,8 @@ model User {
   phone           String?      @unique
   passwor         String?
   googleId        String?
+  imageurl String?
+  imageId String?
   authProvider    AuthProvider @default(EMAIL)
   status          Status       @default(ACTIVE)
   role            UserRole     @default(CITIZEN)

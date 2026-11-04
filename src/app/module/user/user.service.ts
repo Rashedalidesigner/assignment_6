@@ -38,7 +38,7 @@ const uploadProfileImage = async (buffer: Buffer, userId: string) => {
 			id: userId,
 		},
 		select: {
-			imagePublicId: true,
+			imageId: true,
 			imageUrl: true,
 		},
 	});
@@ -78,12 +78,12 @@ const uploadProfileImage = async (buffer: Buffer, userId: string) => {
 		},
 
 		omit: {
-			password: true,
+			passwor: true,
 		},
 	});
 
-	if (currentUser?.imagePublicId && currentUser.imageUrl) {
-		await cloudinary.uploader.destroy(currentUser.imagePublicId);
+	if (currentUser?.imageId && currentUser.imageUrl) {
+		await cloudinary.uploader.destroy(currentUser.imageId);
 	}
 
 	return updatedUser;
