@@ -45,7 +45,6 @@ const updateCategory = catchAsync(async (req:Request,res:Response)=>{
 })
 
 const deleteCategory = catchAsync(async (req:Request,res:Response)=>{
-    const payload = req.body;
     const id = req.params;
     const result = await CategoryServices.deleteCategory(id as unknown as string);
 
