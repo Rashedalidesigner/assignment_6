@@ -3,13 +3,12 @@ model Attachment {
   complaintId  String         @db.Uuid
   uploadedById String         @db.Uuid
   type         AttachmentType @default(IMAGE)
-  fileName     String
-  fileUrl      String
-  mimeType     String?
+  filePublicId String         @default("")
+  fileUrl      String         @default("")
   fileSize     Int?
   createdAt    DateTime       @default(now())
 
-  complaint Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+  complaint  Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
   uploadedBy User      @relation("AttachmentUploader", fields: [uploadedById], references: [id], onDelete: Restrict)
 
   @@index([complaintId, createdAt])
