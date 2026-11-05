@@ -5,10 +5,10 @@ import { upload } from "../../lib/multer";
 const router = Router();
 
 
-router.get("/staff", StaffController.getStaff);
-router.post("/staff", upload.single("image"), StaffController.createStaff);
-router.patch("/staff/:id", upload.single("image"), StaffController.updateStaff);
-router.delete("/staff/:id", StaffController.deleteStaff);
+router.get("/", StaffController.getStaff);
+router.post("/", upload.single("image"), StaffController.createStaff);
+router.patch("/:id", upload.single("image"), StaffController.updateStaff);
+router.delete("/:id", StaffController.deleteStaff);
 
 
 export const StaffRouter = router;

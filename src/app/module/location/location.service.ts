@@ -6,6 +6,15 @@ const getLocation = async () => {
   return result;
 };
 
+const getLocationById = async (id:string)=>{
+  const result = await prisma.serviceLocation.findFirst({
+    where:{
+      id
+    }
+  })
+  return result;
+}
+
 const createLocation = async (payload: Location) => {
   const {
     label,
@@ -75,6 +84,7 @@ const deleteLocation = async (id: string) => {
 };
 
 export const LocationServices = {
+  getLocationById,
   getLocation,
   createLocation,
   updateLocation,

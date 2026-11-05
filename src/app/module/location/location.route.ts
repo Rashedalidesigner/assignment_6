@@ -3,10 +3,12 @@ import { LocationController } from "./location.controller";
 
 const router = Router();
 
-router.get("/location", LocationController.getLocation);
-router.post("/location", LocationController.createLocation);
-router.put("/location/:id", LocationController.updateLocation);
-router.delete("/location/:id", LocationController.deleteLocation);
+
+router.get("/:id",LocationController.getLocationById);
+router.get("/", LocationController.getLocation);
+router.post("/", LocationController.createLocation);
+router.patch("/:id", LocationController.updateLocation);
+router.delete("/:id", LocationController.deleteLocation);
 
 
-export default router;
+export const LocationRouter = router;

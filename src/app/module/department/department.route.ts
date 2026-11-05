@@ -4,9 +4,9 @@ import { DepartmentController } from "./department.controller";
 const router = Router();
 
 
-router.get("/department",DepartmentController.getDepartment);
-router.post("/department",DepartmentController.createDepartment);
-router.patch("/department",DepartmentController.updateDepartment);
-router.delete("/department",DepartmentController.deleteDepartment);
+router.get("/",DepartmentController.getDepartment);
+router.post("/",DepartmentController.createDepartment);
+router.patch("/:id",DepartmentController.updateDepartment);
+router.delete("/:id",DepartmentController.deleteDepartment);
 
 export const DepartmentRouter = router;

@@ -3,6 +3,6 @@ export interface Department {
   name: string;
   description: string;
   code: string;
-  email?: String;
-  phone?: String;
+  email?: string;
+  phone?: string;
 }

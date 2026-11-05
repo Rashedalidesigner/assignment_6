@@ -7,19 +7,21 @@ const getDepartment = async ()=>{
 }
 
 const createDepartment = async (payload:Department)=>{
-    const {name,description,code} = payload;
+    const {name,description,code,email,phone} = payload;
     const result = await prisma.department.create({
         data:{
             name,
             description,
-            code
+            code,
+            email,
+            phone
         }
     });
     return result;
 }
 
 const updateDepartment = async (payload:Department,id:string)=>{
-    const {name,description,code} = payload;
+    const {name,description,code,email,phone} = payload;
     const result = await prisma.department.update({
         where:{
             id
@@ -28,6 +30,8 @@ const updateDepartment = async (payload:Department,id:string)=>{
             name,
             description,
             code,
+            email,
+            phone
         }
     });
     return result;

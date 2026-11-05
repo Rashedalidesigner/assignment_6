@@ -16,7 +16,6 @@ const getDepartment = catchAsync(async (req:Request,res:Response)=>{
   });
 })
 const createDepartment = catchAsync(async (req:Request,res:Response)=>{
-    const id = req.params;
     const result = await DepartmentServices.createDepartment(req.body);
 
   sendResponse(res, {
@@ -27,7 +26,7 @@ const createDepartment = catchAsync(async (req:Request,res:Response)=>{
   });
 })
 const updateDepartment = catchAsync(async (req:Request,res:Response)=>{
-    const id = req.params;
+    const id = req.params?.id;
     const result = await DepartmentServices.updateDepartment(req.body, id as unknown as string);
 
   sendResponse(res, {
@@ -38,7 +37,7 @@ const updateDepartment = catchAsync(async (req:Request,res:Response)=>{
   });
 })
 const deleteDepartment = catchAsync(async (req:Request,res:Response)=>{
-    const id = req.params;
+    const id = req.params?.id;
     const result = await DepartmentServices.deleteDepartment(id as unknown as string);
 
   sendResponse(res, {

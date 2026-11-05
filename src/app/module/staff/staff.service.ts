@@ -11,18 +11,17 @@ const getStaff = async () => {
   return result;
 };
 
-
 const createStaff = async (payload: Staff) => {
   const { userId, departmentId, departmentRole } = payload;
   const result = await prisma.departmentMembership.create({
     data: {
       userId,
-      departmentId, 
-        departmentRole,
+      departmentId,
+      departmentRole,
     },
   });
   return result;
-}
+};
 
 const updateStaff = async (payload: Staff, id: string) => {
   const { departmentRole } = payload;
@@ -35,20 +34,20 @@ const updateStaff = async (payload: Staff, id: string) => {
     },
   });
   return result;
-}
+};
 
 const deleteStaff = async (id: string) => {
   const result = await prisma.departmentMembership.delete({
     where: {
-        id,
+      id,
     },
   });
   return result;
-}
+};
 
 export const StaffServices = {
   getStaff,
   createStaff,
-    updateStaff,
-    deleteStaff,
+  updateStaff,
+  deleteStaff,
 };

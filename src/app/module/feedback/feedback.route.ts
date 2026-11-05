@@ -4,10 +4,10 @@ import { DepartmentController } from "../department/department.controller";
 const router = Router();
 
 
-router.get("/department",DepartmentController.getDepartment);
-router.post("/department",DepartmentController.createDepartment);
-router.patch("/department/:id",DepartmentController.updateDepartment);
-router.delete("/department/:id",DepartmentController.deleteDepartment);
+router.get("/",DepartmentController.getDepartment);
+router.post("/",DepartmentController.createDepartment);
+router.patch("/:id",DepartmentController.updateDepartment);
+router.delete("/:id",DepartmentController.deleteDepartment);
 
 
 export const FeedbackRouter = router;
