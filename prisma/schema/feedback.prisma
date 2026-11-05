@@ -11,4 +11,6 @@ model Feedback {
 
   @@index([authorId, createdAt])
   @@index([rating, createdAt])
+
+  @@map("feedbacks")
 }

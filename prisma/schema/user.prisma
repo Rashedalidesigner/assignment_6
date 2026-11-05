@@ -24,4 +24,5 @@ model User {
 
   @@index([role, isActive])
   @@index([createdAt])
+  @@map("users")
 }

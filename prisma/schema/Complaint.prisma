@@ -35,4 +35,5 @@ model Complaint {
   @@index([categoryId, createdAt])
   @@index([locationId])
   @@index([slaDueAt, isSlaBreached])
+  @@map("complaints")
 }

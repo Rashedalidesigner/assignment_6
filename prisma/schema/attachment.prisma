@@ -12,4 +12,5 @@ model Attachment {
   uploadedBy User      @relation("AttachmentUploader", fields: [uploadedById], references: [id], onDelete: Restrict)
 
   @@index([complaintId, createdAt])
+  @@map("attachments")
 }

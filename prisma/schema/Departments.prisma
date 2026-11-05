@@ -14,4 +14,6 @@ model Department {
   complaints Complaint[]
 
   @@index([isActive])
+
+  @@map("departments")
 }

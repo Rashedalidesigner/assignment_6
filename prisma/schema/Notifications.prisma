@@ -13,4 +13,5 @@ model Notification {
 
   @@index([userId, readAt, createdAt])
   @@index([complaintId, createdAt])
+  @@map("notifications")
 }

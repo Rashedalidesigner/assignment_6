@@ -13,4 +13,5 @@ model Category {
 
   @@unique([departmentId, name])
   @@index([departmentId, isActive])
+  @@map("categories")
 }

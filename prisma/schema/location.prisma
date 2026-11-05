@@ -17,4 +17,5 @@ model ServiceLocation {
 
   @@index([city, area, ward])
   @@index([latitude, longitude])
+  @@map("locations")
 }

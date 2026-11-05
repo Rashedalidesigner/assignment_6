@@ -11,4 +11,5 @@ model DepartmentMembership {
 
   @@unique([userId, departmentId])
   @@index([departmentId, departmentRole, isActive])
+  @@map("department_staff")
 }

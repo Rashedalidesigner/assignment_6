@@ -13,12 +13,12 @@ const createAttachment = async (payload:Attachment,buffer:Buffer,userId:string)=
             {
                 resource_type: "auto",
             },
-            async (error, result) => {
+             async (error, result) => {
                 if (error) {
                     throw new Error(`Cloudinary upload failed: ${error.message}`);
                 } 
 
-                await prisma.attachment.create({
+                const attachment = await prisma.attachment.create({
                     data:{
                         complaintId,
                         uploadedById: userId,
@@ -31,5 +31,16 @@ const createAttachment = async (payload:Attachment,buffer:Buffer,userId:string)=
 
             }
         ).end(buffer);
-    return cloudinaryresult;
+
+        const attachment = await prisma.attachment.findFirst({
+            where:{
+                complaintId
+            }
+        })
+    return attachment;
+}
+
+export const attachmentService = {
+    getAttachment,
+    createAttachment
 }
