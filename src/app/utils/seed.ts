@@ -34,14 +34,15 @@ export const seedSuperAdmin = async () => {
 			Number(config.bcrypt_salt_rounds),
 		);
 
+        console.log(name,email,hashedPassword,UserRole.CITIZEN)
+
 		const superAdmin = await prisma.user.create({
 			data: {
 				fullName:name,
 				email,
 				password: hashedPassword,
 				role: UserRole.CITY_ADMIN,
-				needPasswordChange: false,
-				emailVerified: true,
+				isemailVerified: true,
 			},
 		});
 
@@ -94,8 +95,7 @@ export const seedManagerAdmin = async () => {
 				email,
 				password: hashedPassword,
 				role: UserRole.DEPARTMENT_MANAGER,
-				needPasswordChange: false,
-				emailVerified: true,
+				isemailVerified: true,
 			},
 		});
 
@@ -148,8 +148,7 @@ export const seedTesterTechnician = async () => {
 				email,
 				password: hashedPassword,
 				role: UserRole.TECHNICIAN,
-				needPasswordChange: false,
-				emailVerified: true,
+				isemailVerified: true,
 				doctor: {
 					create: {
 						email,

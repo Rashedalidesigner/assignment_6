@@ -3,24 +3,25 @@ model User {
   fullName        String
   email           String       @unique
   phone           String?      @unique
-  passwor         String?
+  password         String?
   googleId        String?
-  imageurl String?
-  imageId String?
+  imageurl        String?
+  imageId         String?
   authProvider    AuthProvider @default(EMAIL)
   status          Status       @default(ACTIVE)
   role            UserRole     @default(CITIZEN)
   isActive        Boolean      @default(true)
-  isemailVerified Boolean @default(false)
+  isemailVerified Boolean      @default(false)
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
 
-  staff         DepartmentMembership[]
-  submittedComplaints Complaint[]              @relation("ComplaintCreator")
-  uploadedAttachments Attachment[]             @relation("AttachmentUploader")
+  staff               DepartmentMembership[]
+  technician          Technician[]
+  submittedComplaints Complaint[]            @relation("ComplaintCreator")
+  uploadedAttachments Attachment[]           @relation("AttachmentUploader")
   notifications       Notification[]
-  feedbackGiven       Feedback[]               @relation("FeedbackAuthor")
-  auditLogs           AuditLog[]               @relation("AuditActor")
+  feedbackGiven       Feedback[]             @relation("FeedbackAuthor")
+  auditLogs           AuditLog[]             @relation("AuditActor")
 
   @@index([role, isActive])
   @@index([createdAt])
