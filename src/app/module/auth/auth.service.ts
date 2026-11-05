@@ -149,12 +149,12 @@ const verifyPatientEmail = async (payload: IVerifyEmailPayload) => {
     data: {
       fullName: citizenPayload.fullname,
       email: citizenPayload.email,
-      passwor: citizenPayload.password,
+      password: citizenPayload.password,
       role: UserRole.CITIZEN,
       status: Status.ACTIVE,
       isemailVerified: true,
     },
-    omit: { passwor: true },
+    omit: { password: true },
   });
 
   await redisClient.del(citizenRegistrationKey);
@@ -229,7 +229,7 @@ const loginUser = async (payload: ILoginUserPayload) => {
     throw new AppError(httpStatus.FORBIDDEN, "User is deleted");
   }
 
-  if (user.passwor === null && user.googleId !== null) {
+  if (user.password === null && user.googleId !== null) {
     throw new AppError(
       httpStatus.BAD_REQUEST,
       "User Already Has Account Registered With Google. Try To Login With Google.",
@@ -238,7 +238,7 @@ const loginUser = async (payload: ILoginUserPayload) => {
 
   const isPasswordMatched = await bcrypt.compare(
     password,
-    user.passwor as string,
+    user.password as string,
   );
 
   if (!isPasswordMatched) {
@@ -276,7 +276,7 @@ const getMe = async (user: IRequestUser) => {
       id: user.userId,
     },
     omit: {
-      passwor: true,
+      password: true,
     },
   });
 

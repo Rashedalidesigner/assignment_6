@@ -149,15 +149,10 @@ export const seedTesterTechnician = async () => {
 				password: hashedPassword,
 				role: UserRole.TECHNICIAN,
 				isemailVerified: true,
-				doctor: {
+				technician: {
 					create: {
-						email,
-						name,
-						experienceYears: 5,
-						licenseNumber: "BMDC0000",
-						qualifications: "MBBS",
-						specialization: "Neurology",
-						verificationStatus: Status.ACTIVE,
+						experienceYears:2,
+                        specialization:["computer"]
 					},
 				},
 			},

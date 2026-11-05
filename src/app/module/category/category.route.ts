@@ -6,5 +6,5 @@ const router = Router();
 
 router.get("/category",CategoryController.GetCategory);
 router.post("/category",CategoryController.PostCategory);
-router.patch("/category",CategoryController.updateCategory);
-router.delete("/category",CategoryController.deleteCategory);
+router.patch("/category/:id",CategoryController.updateCategory);
+router.delete("/category/:id",CategoryController.deleteCategory);
