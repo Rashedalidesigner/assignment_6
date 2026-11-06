@@ -8,7 +8,7 @@ model User {
   imageurl        String?
   imageId         String?
   authProvider    AuthProvider @default(EMAIL)
-  status          Status       @default(ACTIVE)
+  status          Status       @default(PANDING)
   role            UserRole     @default(CITIZEN)
   isActive        Boolean      @default(true)
   isemailVerified Boolean      @default(false)

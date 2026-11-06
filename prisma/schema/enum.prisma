@@ -7,9 +7,12 @@ enum UserRole {
 }
 
 enum DepartmentRole {
-  STAFF
+  DEPARTMENT_HEAD
+  SENIOR_OFFICER
+  JUNIOR_OFFICER
+  SUPERVISOR
+  SENIOR_TECHNICIAN
   TECHNICIAN
-  MANAGER
 }
 
 enum ComplaintStatus {
@@ -75,6 +78,9 @@ enum AuthProvider {
 }
 
 enum Status {
+  PANDING
+  APROVED
+  REJECTED
   ACTIVE 
   BLOCKED
   DELETED

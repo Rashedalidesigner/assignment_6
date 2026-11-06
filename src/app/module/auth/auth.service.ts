@@ -101,7 +101,7 @@ const registerCitizen = async (payload: IRegistercitizenPayload) => {
   });
 };
 
-const verifyPatientEmail = async (payload: IVerifyEmailPayload) => {
+const verifyCitizenEmail = async (payload: IVerifyEmailPayload) => {
   const otp = payload.otp;
   const email = payload.email.trim().toLowerCase();
 
@@ -173,7 +173,7 @@ const verifyPatientEmail = async (payload: IVerifyEmailPayload) => {
   await transporter.sendMail({
     from: config.email_sender,
     to: email,
-    subject: "Welcome To PH Healthcare System",
+    subject: "Welcome To City Complaint & Service Request Platform.",
     // text : `Your OTP is ${otp}`
     // html: `<h1>Your OTP is ${otp}</h1>`
     html,
@@ -635,7 +635,7 @@ const resetPassword = async (payload: IResetPasswordPayload) => {
 
 export const AuthService = {
   registerCitizen,
-  verifyPatientEmail,
+  verifyCitizenEmail,
   loginUser,
   getMe,
   refreshToken,
