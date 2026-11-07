@@ -3,6 +3,7 @@ import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import httpStatus from "http-status";
 import { StaffServices } from "./staff.service";
+import { string } from "zod";
 
 
 
@@ -29,7 +30,11 @@ const applyStaff = catchAsync(async (req:Request,res:Response)=>{
 })
 const updateStaff = catchAsync(async (req:Request,res:Response)=>{
     const id = req.params?.id;
-    const result = await StaffServices.conformStaff(req.body, id as unknown as string);
+    const user = req.user;
+    if(user?.role!=="CITY_ADMIN"&& user?.role!=="DEPARTMENT_MANAGER"){
+      throw new Error("Admin staff only city admin and department manager");
+    }
+    const result = await StaffServices.ApproviedStaff(id as unknown as string);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -40,7 +45,11 @@ const updateStaff = catchAsync(async (req:Request,res:Response)=>{
 })
 const updateManager = catchAsync(async (req:Request,res:Response)=>{
     const id = req.params?.id;
-    const result = await StaffServices.conformManager(req.body, id as unknown as string);
+    const user = req.user;
+    if(user?.role!=="CITY_ADMIN"){
+      throw new Error("Approvied Manager only city Admin");
+    }
+    const result = await StaffServices.ApproviedManager(id as unknown as string);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -48,6 +57,16 @@ const updateManager = catchAsync(async (req:Request,res:Response)=>{
     message: "Staff updated successfully",
     data: result,
   });
+});
+
+const verifyStaff = catchAsync(async (req:Request,res:Response)=>{
+  const result = await StaffServices.verifyStaff(req.body);
+  sendResponse(res,{
+    statusCode:httpStatus.OK,
+    success:true,
+    message:"Staff verify Successfull",
+    data:result
+  })
 })
 const deleteStaff = catchAsync(async (req:Request,res:Response)=>{
     const id = req.params?.id;
@@ -67,5 +86,6 @@ export const StaffController = {
     applyStaff,
     updateStaff,
     updateManager,
+    verifyStaff,
     deleteStaff
 }

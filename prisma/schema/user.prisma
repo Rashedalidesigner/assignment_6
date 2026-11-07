@@ -24,6 +24,7 @@ model User {
   auditLogs           AuditLog[]             @relation("AuditActor")
 
   @@index([role, isActive])
+  @@index([email,googleId,imageId])
   @@index([createdAt])
   @@map("users")
 }

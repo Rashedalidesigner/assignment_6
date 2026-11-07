@@ -13,3 +13,15 @@ export interface Staff {
   address:string;
   departmentRole:DepartmentRole
 }
+
+export interface IUser {
+  name:string;
+  email:string;
+  role:UserRole;
+  userId:string;
+}
+
+export interface VerifyPayload {
+  otp:string,
+  email:string
+}
