@@ -1,8 +1,12 @@
 import bcrypt from "bcryptjs";
 import { UserRole } from "../../../../prisma/generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
-import { ITechnician } from "./technician.interface";
+import { ITechnician, ItechnicianInfo } from "./technician.interface";
 import config from "../../config";
+import generateRandomPassword from "../../utils/randomPassword";
+import path from "path";
+import ejs from "ejs";
+import { transporter } from "../../lib/nodemailer";
 
 const getTechnician = async () => {
   const technician = await prisma.technician.findMany();
@@ -18,37 +22,74 @@ const getTechnicianById = async (id: string) => {
   return technician;
 };
 
-const createTechnician = async (data: ITechnician) => {
-  const { fullname, email, phone, password } = data;
-  const hashedpassword = await bcrypt.hash(password, Number(config.bcrypt_salt_rounds));
-  const technician = await prisma.user.create({
-    data: {
-      fullName: fullname,
-      email,
-      password: hashedpassword,
-      role: UserRole.TECHNICIAN,
-      isemailVerified: true,
-      phone:phone,
-      technician: {
-        create: {
-          experienceYears: 2,
-          specialization: ["computer"],
-        },
-      },
-    },
+const applayTechnician = async(data:ITechnician) =>{
+  const {fullname,email,experienceYears,specialization,phone}= data;
+  const userExits = await prisma.user.findUnique({
+    where:{
+      email
+    }
   });
-  return technician;
-};
 
-const updateTechnician = async (id: string, data: Partial<ITechnician>) => {
-  const technician = await prisma.technician.update({
-    where: {
-      id,
-    },
-    data,
+  if(userExits){
+    throw new Error("User Already Exits");
+  }
+  const technician = await prisma.user.create({
+    data:{
+      fullName:fullname,
+      email,
+      role: UserRole.TECHNICIAN,
+      phone,
+      technician:{
+        create:{
+          experienceYears,
+          specialization,
+        }
+      }
+    }
   });
   return technician;
-};
+}
+
+const approviedTechnician = async (data:ItechnicianInfo)=>{
+  const password = generateRandomPassword();
+  const hashedpassword = await bcrypt.hash(password,config.bcrypt_salt_rounds as string);
+  const {id}= data;
+  const approvied = await prisma.user.update({
+    where:{
+      id
+    },
+    data:{
+      isemailVerified:true,
+      password:hashedpassword
+    }
+  });
+
+  const user = await prisma.technician.findFirst({
+    where:{
+      id
+    },
+  })
+  const templatePath = path.join(
+      process.cwd(),
+      "src/app/templates/technician-welcome-email"
+    );
+  
+    const html = await ejs.renderFile(templatePath, {
+    name: approvied.fullName,
+    email: data.email,
+    employeeId: user?.id,
+    password: password,
+    loginUrl: "http://localhost:5000/api/auth/login",
+  });
+  
+    await transporter.sendMail({
+      from: config.email_sender,
+      to: data.email,
+      subject: "Email Verification",
+      html,
+    });
+}
+
 
 const deleteTechnician = async (id: string) => {
   const technician = await prisma.technician.delete({
@@ -62,7 +103,7 @@ const deleteTechnician = async (id: string) => {
 export const TechnicianService = {
   getTechnician,
   getTechnicianById,
-  createTechnician,
-  updateTechnician,
+  applayTechnician,
+  approviedTechnician,
   deleteTechnician,
 };

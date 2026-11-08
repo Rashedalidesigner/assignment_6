@@ -6,8 +6,8 @@ const router = Router();
 
 router.get("/",TechnicianController.getTechnician);
 router.get("/:id",TechnicianController.getTechnicianById);
-router.post("/",TechnicianController.createTechnician);
-router.put("/:id",TechnicianController.updateTechnician);
+router.post("/",TechnicianController.applayTechnician);
+router.patch("/:id",TechnicianController.approvedTechnician);
 router.delete("/:id",TechnicianController.deleteTechnician);
 
 export const TechnicianRoute = router;

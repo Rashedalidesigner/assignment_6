@@ -8,3 +8,8 @@ export interface ITechnician extends IRegistercitizenPayload {
     specialization  : string[];
     status          : Status
 }
+
+export interface ItechnicianInfo {
+    email:string,
+    id:string
+}
