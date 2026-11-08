@@ -3,7 +3,6 @@ import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import httpStatus from "http-status";
 import { StaffServices } from "./staff.service";
-import { string } from "zod";
 
 
 
@@ -28,13 +27,14 @@ const applyStaff = catchAsync(async (req:Request,res:Response)=>{
     data: result,
   });
 })
-const updateStaff = catchAsync(async (req:Request,res:Response)=>{
+const approvedStaff = catchAsync(async (req:Request,res:Response)=>{
     const id = req.params?.id;
+    const status = req.body;
     const user = req.user;
     if(user?.role!=="CITY_ADMIN"&& user?.role!=="DEPARTMENT_MANAGER"){
       throw new Error("Admin staff only city admin and department manager");
     }
-    const result = await StaffServices.ApproviedStaff(id as unknown as string);
+    const result = await StaffServices.ApproviedStaff(id as unknown as string,status);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -43,31 +43,7 @@ const updateStaff = catchAsync(async (req:Request,res:Response)=>{
     data: result,
   });
 })
-const updateManager = catchAsync(async (req:Request,res:Response)=>{
-    const id = req.params?.id;
-    const user = req.user;
-    if(user?.role!=="CITY_ADMIN"){
-      throw new Error("Approvied Manager only city Admin");
-    }
-    const result = await StaffServices.ApproviedManager(id as unknown as string);
 
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Staff updated successfully",
-    data: result,
-  });
-});
-
-const verifyStaff = catchAsync(async (req:Request,res:Response)=>{
-  const result = await StaffServices.verifyStaff(req.body);
-  sendResponse(res,{
-    statusCode:httpStatus.OK,
-    success:true,
-    message:"Staff verify Successfull",
-    data:result
-  })
-})
 const deleteStaff = catchAsync(async (req:Request,res:Response)=>{
     const id = req.params?.id;
     const result = await StaffServices.deleteStaff(id as unknown as string);
@@ -84,8 +60,6 @@ const deleteStaff = catchAsync(async (req:Request,res:Response)=>{
 export const StaffController = {
     getStaff,
     applyStaff,
-    updateStaff,
-    updateManager,
-    verifyStaff,
+    approvedStaff,
     deleteStaff
 }

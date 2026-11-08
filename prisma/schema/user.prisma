@@ -1,9 +1,9 @@
 model User {
   id              String       @id @default(uuid()) @db.Uuid
-  fullName        String
+  name            String
   email           String       @unique
   phone           String?      @unique
-  password         String?
+  password        String?
   googleId        String?
   imageurl        String?
   imageId         String?
@@ -24,7 +24,7 @@ model User {
   auditLogs           AuditLog[]             @relation("AuditActor")
 
   @@index([role, isActive])
-  @@index([email,googleId,imageId])
+  @@index([email, googleId, imageId])
   @@index([createdAt])
   @@map("users")
 }

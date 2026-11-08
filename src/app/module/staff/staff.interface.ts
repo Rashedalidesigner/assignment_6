@@ -2,7 +2,7 @@ import { DepartmentRole, Status, UserRole } from "../../../../prisma/generated/p
 
 export interface Staff {
   id: string;
-  fullName: string;
+  name: string;
   email: string;
   password: string;
   role: UserRole;

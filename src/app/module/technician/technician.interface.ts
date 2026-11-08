@@ -11,5 +11,6 @@ export interface ITechnician extends IRegistercitizenPayload {
 
 export interface ItechnicianInfo {
     email:string,
-    id:string
+    id:string,
+    status:Status
 }

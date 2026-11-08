@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import { UserRole } from "../../../../prisma/generated/prisma/enums";
+import { Status, UserRole } from "../../../../prisma/generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import { ITechnician, ItechnicianInfo } from "./technician.interface";
 import config from "../../config";
@@ -9,7 +9,11 @@ import ejs from "ejs";
 import { transporter } from "../../lib/nodemailer";
 
 const getTechnician = async () => {
-  const technician = await prisma.technician.findMany();
+  const technician = await prisma.technician.findMany({
+    include: {
+      user: true,
+    },
+  });
   return technician;
 };
 
@@ -22,74 +26,106 @@ const getTechnicianById = async (id: string) => {
   return technician;
 };
 
-const applayTechnician = async(data:ITechnician) =>{
-  const {fullname,email,experienceYears,specialization,phone}= data;
+const applayTechnician = async (data: ITechnician) => {
+  const { name, email, experienceYears, specialization, phone } = data;
   const userExits = await prisma.user.findUnique({
-    where:{
-      email
-    }
+    where: {
+      email,
+    },
   });
 
-  if(userExits){
+  if (userExits) {
     throw new Error("User Already Exits");
   }
+
+  // console.log(name)
   const technician = await prisma.user.create({
-    data:{
-      fullName:fullname,
+    data: {
+      name: name,
       email,
       role: UserRole.TECHNICIAN,
       phone,
-      technician:{
-        create:{
+      technician: {
+        create: {
           experienceYears,
           specialization,
-        }
-      }
-    }
+        },
+      },
+    },
   });
   return technician;
-}
+};
 
-const approviedTechnician = async (data:ItechnicianInfo)=>{
-  const password = generateRandomPassword();
-  const hashedpassword = await bcrypt.hash(password,config.bcrypt_salt_rounds as string);
-  const {id}= data;
-  const approvied = await prisma.user.update({
-    where:{
-      id
+const approviedTechnician = async (
+  id: string,
+  email: string,
+  status: Status
+) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      id,
     },
-    data:{
-      isemailVerified:true,
-      password:hashedpassword
-    }
+    include: {
+      technician: true,
+    },
   });
 
-  const user = await prisma.technician.findFirst({
-    where:{
-      id
-    },
-  })
-  const templatePath = path.join(
+  if (status == "REJECTED") {
+    const templatePath = path.join(
       process.cwd(),
-      "src/app/templates/technician-welcome-email"
+      "src/app/templates/technician-rejected-email"
     );
-  
+
     const html = await ejs.renderFile(templatePath, {
-    name: approvied.fullName,
-    email: data.email,
-    employeeId: user?.id,
-    password: password,
-    loginUrl: "http://localhost:5000/api/auth/login",
-  });
-  
+      fullName: user?.name,
+      email: user?.email,
+      role: user?.role,
+      companyName: "City Complaint Services",
+      rejectionReason: "Your submitted information could not be verified.",
+    });
+
     await transporter.sendMail({
       from: config.email_sender,
-      to: data.email,
+      to: email,
       subject: "Email Verification",
       html,
     });
-}
+  }
+  const password = generateRandomPassword();
+  const hashedpassword = await bcrypt.hash(
+    password,
+    config.bcrypt_salt_rounds as string
+  );
+  const approvied = await prisma.user.update({
+    where: {
+      id,
+    },
+    data: {
+      status: status,
+      isemailVerified: true,
+      password: hashedpassword,
+    },
+  });
+  const templatePath = path.join(
+    process.cwd(),
+    "src/app/templates/technician-welcome-email"
+  );
 
+  const html = await ejs.renderFile(templatePath, {
+    name: approvied.name,
+    email: email,
+    employeeId: id,
+    password: password,
+    loginUrl: "http://localhost:5000/api/auth/login",
+  });
+
+  await transporter.sendMail({
+    from: config.email_sender,
+    to: email,
+    subject: "Email Verification",
+    html,
+  });
+};
 
 const deleteTechnician = async (id: string) => {
   const technician = await prisma.technician.delete({

@@ -6,12 +6,10 @@ import { auth } from "../../middleware/checkAuth";
 const router = Router();
 
 
-router.get("/", StaffController.getStaff);
-router.post("/", upload.single("resume"), StaffController.applyStaff);
-router.patch("/staffConform/:id", auth("DEPARTMENT_MANAGER","CITY_ADMIN"), StaffController.updateStaff);
-router.patch("/managerConform/:id", auth("CITY_ADMIN"), StaffController.updateManager);
-router.patch("/verify-staff" ,StaffController.verifyStaff);
-router.delete("/:id", StaffController.deleteStaff);
+router.get("/",auth("CITY_ADMIN","DEPARTMENT_MANAGER"), StaffController.getStaff);
+router.post("/apply-staff", upload.single("resume"), StaffController.applyStaff);
+router.patch("/aproved-staff/:id", auth("DEPARTMENT_MANAGER","CITY_ADMIN"), StaffController.approvedStaff);
+router.delete("/:id",auth("CITY_ADMIN","DEPARTMENT_MANAGER"), StaffController.deleteStaff);
 
 
 export const StaffRouter = router;

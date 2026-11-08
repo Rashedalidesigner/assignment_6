@@ -6,7 +6,7 @@ export interface ILoginUserPayload {
 }
 
 export interface IRegistercitizenPayload {
-	fullname: string;
+	name: string;
 	email: string;
 	password: string;
 	phone?:string;
@@ -19,7 +19,7 @@ export interface IVerifyEmailPayload {
 export interface IRequestUser {
 	userId: string;
 	email: string;
-	fullname: string;
+	name: string;
 	role: UserRole;
 }
 

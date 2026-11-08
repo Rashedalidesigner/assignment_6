@@ -38,11 +38,12 @@ export const seedSuperAdmin = async () => {
 
 		const superAdmin = await prisma.user.create({
 			data: {
-				fullName:name,
+				name:name,
 				email,
 				password: hashedPassword,
 				role: UserRole.CITY_ADMIN,
 				isemailVerified: true,
+				status:Status.ACTIVE
 			},
 		});
 
@@ -91,11 +92,12 @@ export const seedManagerAdmin = async () => {
 
 		const managerAdmin = await prisma.user.create({
 			data: {
-				fullName: name,
+				name: name,
 				email,
 				password: hashedPassword,
 				role: UserRole.DEPARTMENT_MANAGER,
 				isemailVerified: true,
+				status:Status.ACTIVE,
 			},
 		});
 
@@ -144,11 +146,12 @@ export const seedTesterTechnician = async () => {
 
 		const testerTechnician = await prisma.user.create({
 			data: {
-				fullName: name,
+				name: name,
 				email,
 				password: hashedPassword,
 				role: UserRole.TECHNICIAN,
 				isemailVerified: true,
+				status:Status.ACTIVE,
 				technician: {
 					create: {
 						experienceYears:2,

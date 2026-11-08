@@ -29,7 +29,7 @@ import type {
 } from "./auth.interface";
 
 const registerCitizen = async (payload: IRegistercitizenPayload) => {
-  const { fullname, password,phone } = payload;
+  const { name, password,phone } = payload;
 
   const email = payload.email.trim().toLowerCase();
 
@@ -62,7 +62,7 @@ const registerCitizen = async (payload: IRegistercitizenPayload) => {
 
   const citizenRegistrationKey = `citizen-registration-data:${email}`;
   const redisUserDataPayload = {
-    fullname,
+    name,
     email,
     password: hashedPassword,
     phone,
@@ -85,7 +85,7 @@ const registerCitizen = async (payload: IRegistercitizenPayload) => {
   );
 
   const templateData = {
-    fullname,
+    name,
     email,
     otp: otpValue,
     expirationMinutes: expirationSeconds / 60,
@@ -147,7 +147,7 @@ const verifyCitizenEmail = async (payload: IVerifyEmailPayload) => {
 
   const createdUser = await prisma.user.create({
     data: {
-      fullName: citizenPayload.fullname,
+      name: citizenPayload.name,
       email: citizenPayload.email,
       password: citizenPayload.password,
       role: UserRole.CITIZEN,
@@ -165,7 +165,7 @@ const verifyCitizenEmail = async (payload: IVerifyEmailPayload) => {
   );
 
   const templateData = {
-    fullname: createdUser.fullName,
+    name: createdUser.name,
   };
 
   const html = await ejs.renderFile(tempatePath, templateData);
@@ -182,7 +182,7 @@ const verifyCitizenEmail = async (payload: IVerifyEmailPayload) => {
   const { ...user } = createdUser;
   const jwtPayload = {
     userId: user.id,
-    fullname: user.fullName,
+    name: user.name,
     email: user.email,
     role: user.role,
   };
@@ -247,7 +247,7 @@ const loginUser = async (payload: ILoginUserPayload) => {
 
   const jwtPayload = {
     userId: user.id,
-    fullname: user.fullName,
+    name: user.name,
     email: user.email,
     role: user.role,
   };
@@ -317,7 +317,7 @@ const refreshToken = async (token: string) => {
 
   const jwtPayload = {
     userId: user.id,
-    fullname: user.fullName,
+    name: user.name,
     email: user.email,
     role: user.role,
   };
@@ -420,7 +420,7 @@ const googleLogin = async (payload: IGoogleLoginPayload) => {
       // Google Register
       user = await prisma.user.create({
         data: {
-          fullName: googleIdTokenPayload.name,
+          name: googleIdTokenPayload.name,
           email: googleIdTokenPayload.email,
           role: UserRole.CITIZEN,
           googleId: googleIdTokenPayload.sub,
@@ -434,7 +434,7 @@ const googleLogin = async (payload: IGoogleLoginPayload) => {
       );
 
       const templateData = {
-        fullname: user.fullName,
+        name: user.name,
       };
 
       const html = await ejs.renderFile(tempatePath, templateData);
@@ -464,7 +464,7 @@ const googleLogin = async (payload: IGoogleLoginPayload) => {
 
   const jwtPayload = {
     userId: user.id,
-    fullname: user.fullName,
+    name: user.name,
     email: user.email,
     role: user.role,
   };
@@ -538,7 +538,7 @@ const forgotPassword = async (payload: IForgotPasswordPayload) => {
   );
 
   const templateData = {
-    fullname: isUserExist.fullName,
+    name: isUserExist.name,
     otp,
     expirationMinutes: expirationSeconds / 60,
   };
@@ -618,7 +618,7 @@ const resetPassword = async (payload: IResetPasswordPayload) => {
   );
 
   const templateData = {
-    fullname: isUserExist.fullName,
+    name: isUserExist.name,
   };
 
   const html = await ejs.renderFile(tempatePath, templateData);

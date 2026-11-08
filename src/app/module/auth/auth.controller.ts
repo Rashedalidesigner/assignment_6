@@ -20,7 +20,7 @@ const registerPatient = catchAsync(async (req: Request, res: Response) => {
 const verifyPatientEmail = catchAsync(async (req: Request, res: Response) => {
   const payload = req.body;
 
-  const result = await AuthService.verifyPatientEmail(payload);
+  const result = await AuthService.verifyCitizenEmail(payload);
 
   const { accessToken, refreshToken, user } = result;
 

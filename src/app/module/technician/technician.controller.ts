@@ -40,14 +40,12 @@ const applayTechnician = catchAsync(async (req:Request,res:Response)=>{
 const approvedTechnician = catchAsync(async (req:Request,res:Response)=>{
     const user = req.user;
     const id = req.params?.id as unknown as string;
-    const {email}= req.body;
+    const {email,status}= req.body;
     if(user?.role=="CITY_ADMIN"|| user?.role=="DEPARTMENT_MANAGER"){
 throw new Error("Your are not Approvied");
     };
 
-    const result = await TechnicianService.approviedTechnician({
-        id,email
-    });
+    const result = await TechnicianService.approviedTechnician(id,email,status);
 sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
