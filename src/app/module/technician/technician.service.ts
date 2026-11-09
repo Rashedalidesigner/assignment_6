@@ -43,7 +43,7 @@ const applayTechnician = async (data: ITechnician) => {
     data: {
       name: name,
       email,
-      role: UserRole.TECHNICIAN,
+      role:UserRole.TECHNICIAN,
       phone,
       technician: {
         create: {
@@ -73,7 +73,7 @@ const approviedTechnician = async (
   if (status == "REJECTED") {
     const templatePath = path.join(
       process.cwd(),
-      "src/app/templates/technician-rejected-email"
+      "src/app/templates/technician-rejected-email.ejs"
     );
 
     const html = await ejs.renderFile(templatePath, {
@@ -92,10 +92,7 @@ const approviedTechnician = async (
     });
   }
   const password = generateRandomPassword();
-  const hashedpassword = await bcrypt.hash(
-    password,
-    config.bcrypt_salt_rounds as string
-  );
+  const hashedpassword = bcrypt.hashSync(password,Number(config.bcrypt_salt_rounds ))
   const approvied = await prisma.user.update({
     where: {
       id,
@@ -108,7 +105,7 @@ const approviedTechnician = async (
   });
   const templatePath = path.join(
     process.cwd(),
-    "src/app/templates/technician-welcome-email"
+    "src/app/templates/technician-welcome-email.ejs"
   );
 
   const html = await ejs.renderFile(templatePath, {

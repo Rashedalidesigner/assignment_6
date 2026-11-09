@@ -16,8 +16,9 @@ const getComplaint = catchAsync(async (req:Request,res:Response)=>{
   });
 })
 const createComplaint = catchAsync(async (req:Request,res:Response)=>{
-    const id = req.params;
-    const result = await ComplaintServices.createComplaint(req.body);
+    const id = req.user?.userId;
+    const payload = req.body;
+    const result = await ComplaintServices.createComplaint(id as unknown as string,payload);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

@@ -1,4 +1,4 @@
-import { Status } from "../../../../prisma/generated/prisma/enums";
+import { Status, UserRole } from "../../../../prisma/generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import { Staff, VerifyPayload } from "./staff.interface";
 import { transporter } from "../../lib/nodemailer";
@@ -22,7 +22,7 @@ const getStaff = async () => {
 };
 
 const staffApplay = async (payload: Staff, file: Buffer) => {
-  const { name, email, role, departmentId, departmentRole, address } = payload;
+  const { name, email, departmentId, departmentRole, address } = payload;
   // console.log(file)
   const resumeUpload = await new Promise<UploadApiResponse>(
     (resolve, reject) => {
@@ -52,7 +52,7 @@ const staffApplay = async (payload: Staff, file: Buffer) => {
     data: {
       name,
       email,
-      role,
+      role:UserRole.DEPARTMENT_STAFF,
       staff: {
         create: {
           departmentId,
@@ -63,16 +63,8 @@ const staffApplay = async (payload: Staff, file: Buffer) => {
       },
     },
   });
-  const staffdata = await prisma.user.findUnique({
-    where: {
-      id: result.id,
-    },
-    include: {
-      staff: true,
-    },
-  });
 
-  return staffdata;
+  return result;
 };
 
 const ApproviedStaff = async (id: string, status: Status) => {
@@ -85,7 +77,7 @@ const ApproviedStaff = async (id: string, status: Status) => {
     },
   });
   const password = generateRandomPassword();
-  if (status == "REJECTED") {
+  if (status == "REJECTED"|| status=="BLOCKED"||status=="DELETED"||status=="PANDING") {
     const tempatePath = path.join(
       process.cwd(),
       "src/app/templates/staff-application-rejected.ejs"
@@ -106,14 +98,15 @@ const ApproviedStaff = async (id: string, status: Status) => {
   }
   const hashedpassword = await bcrypt.hash(
     password,
-    config.bcrypt_salt_rounds as string
+    Number(config.bcrypt_salt_rounds)
   );
+  console.log(status)
   const result = await prisma.user.update({
     where: {
       id,
     },
     data: {
-      status: status,
+      status,
       isemailVerified: true,
       password: hashedpassword,
     },
@@ -148,42 +141,6 @@ const ApproviedStaff = async (id: string, status: Status) => {
   });
   return null;
 };
-const verifyStaff = async (payload: VerifyPayload) => {
-  const { email, otp } = payload;
-  const staff_otp_key = `vefify_staff_otp_key_${email}`;
-
-  const staffOptKey = await redisClient.get(staff_otp_key);
-  if (staffOptKey !== otp) {
-    throw new Error("plase provied valid OTP Key");
-  }
-
-  const verifyStaff = await prisma.user.update({
-    where: {
-      email,
-    },
-    data: {
-      isemailVerified: true,
-    },
-  });
-
-  const tempatePath = path.join(
-    process.cwd(),
-    "src/app/templates/staff-welcome-email.ejs"
-  );
-
-  const tempaltedata = {
-    name: verifyStaff.name,
-  };
-  const html = await ejs.renderFile(tempatePath, tempaltedata);
-
-  await transporter.sendMail({
-    from: config.email_sender,
-    to: email,
-    subject: "Email Verification",
-    html,
-  });
-  return verifyStaff;
-};
 
 const deleteStaff = async (id: string) => {
   const result = await prisma.user.delete({
@@ -202,5 +159,4 @@ export const StaffServices = {
   staffApplay,
   ApproviedStaff,
   deleteStaff,
-  verifyStaff,
 };

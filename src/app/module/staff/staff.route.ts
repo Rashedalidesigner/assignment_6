@@ -7,8 +7,8 @@ const router = Router();
 
 
 router.get("/",auth("CITY_ADMIN","DEPARTMENT_MANAGER"), StaffController.getStaff);
-router.post("/apply-staff", upload.single("resume"), StaffController.applyStaff);
-router.patch("/aproved-staff/:id", auth("DEPARTMENT_MANAGER","CITY_ADMIN"), StaffController.approvedStaff);
+router.post("/apply", upload.single("resume"), StaffController.applyStaff);
+router.patch("/aproved/:id", auth("DEPARTMENT_MANAGER","CITY_ADMIN"), StaffController.approvedStaff);
 router.delete("/:id",auth("CITY_ADMIN","DEPARTMENT_MANAGER"), StaffController.deleteStaff);
 
 

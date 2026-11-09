@@ -29,7 +29,7 @@ const applyStaff = catchAsync(async (req:Request,res:Response)=>{
 })
 const approvedStaff = catchAsync(async (req:Request,res:Response)=>{
     const id = req.params?.id;
-    const status = req.body;
+    const {status} = req.body;
     const user = req.user;
     if(user?.role!=="CITY_ADMIN"&& user?.role!=="DEPARTMENT_MANAGER"){
       throw new Error("Admin staff only city admin and department manager");

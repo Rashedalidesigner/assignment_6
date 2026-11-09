@@ -19,3 +19,10 @@ export interface Complaint {
   locationId: string;
   departmentId: string;
 }
+
+export interface ComplaintUser {
+  name:string,
+  email:string,
+  role:string,
+  id:string
+}

@@ -2,21 +2,13 @@
 
 model Complaint {
   id                   String            @id @default(uuid()) @db.Uuid
-  ticketNumber         String            @unique @default(uuid())
   title                String
   description          String
-  status               ComplaintStatus   @default(SUBMITTED)
   priority             ComplaintPriority @default(NORMAL)
   citizenId            String            @db.Uuid
   categoryId           String            @db.Uuid
   locationId           String            @db.Uuid
   departmentId         String?           @db.Uuid
-  slaDueAt             DateTime?
-  firstResponseAt      DateTime?
-  resolvedAt           DateTime?
-  closedAt             DateTime?
-  isSlaBreached        Boolean           @default(false)
-  reopenedCount        Int               @default(0)
   createdAt            DateTime          @default(now())
   updatedAt            DateTime          @updatedAt
 
@@ -30,10 +22,9 @@ model Complaint {
   auditLogs    AuditLog[]
 
   @@index([citizenId, createdAt])
-  @@index([status, priority, createdAt])
-  @@index([departmentId, status, priority])
+  @@index([ priority, createdAt])
+  @@index([departmentId, priority])
   @@index([categoryId, createdAt])
   @@index([locationId])
-  @@index([slaDueAt, isSlaBreached])
   @@map("complaints")
 }

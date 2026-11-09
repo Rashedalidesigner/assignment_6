@@ -1,19 +1,19 @@
 import { prisma } from "../../lib/prisma";
-import { Complaint } from "./complaint.interface";
+import { Complaint, ComplaintUser } from "./complaint.interface";
 
 const getComplaint = async ()=>{
     const result = await prisma.complaint.findMany();
     return result;
 };
 
-const createComplaint = async (payload:Complaint)=>{
-    const {title,description,citizenId,categoryId,locationId,departmentId} = payload;
+const createComplaint = async (id:string,payload:Complaint)=>{
+    const {title,description,categoryId,locationId,departmentId} = payload;
     const result = await prisma.complaint.create({
         data:{
             title,
             description,
             locationId,
-            citizenId,
+            citizenId:id,
             categoryId,
             departmentId
         }

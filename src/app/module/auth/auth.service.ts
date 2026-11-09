@@ -161,7 +161,7 @@ const verifyCitizenEmail = async (payload: IVerifyEmailPayload) => {
 
   const tempatePath = path.join(
     process.cwd(),
-    "src/app/templates/patient-welcome-email.ejs",
+    "src/app/templates/citizen-welcome-email.ejs",
   );
 
   const templateData = {
@@ -606,7 +606,7 @@ const resetPassword = async (payload: IResetPasswordPayload) => {
       email: isUserExist.email,
     },
     data: {
-      passwor: hashedNewPassword,
+      password: hashedNewPassword,
     },
   });
 
