@@ -18,11 +18,12 @@ const createAssignmet = catchAsync(async (req:Request,res:Response)=>{
     if(user?.role!=="CITIZEN" && user?.role=="TECHNICIAN"){
         throw new Error("your are not create assignment");
     }
+    console.log(req.body);
     const result = await assignmentService.createAssignment(req.body);
     sendResponse(res,{
         statusCode:httpStatus.OK,
         success:true,
-        message:"Get all Assignment Successfull",
+        message:"create assignment successfull",
         data:result
     })
 })
@@ -37,7 +38,7 @@ const updateAssignment = catchAsync(async (req:Request,res:Response)=>{
     sendResponse(res,{
         statusCode:httpStatus.OK,
         success:true,
-        message:"Get all Assignment Successfull",
+        message:"assignment updated successfull",
         data:result
     })
 })
@@ -47,7 +48,7 @@ const deleteAssignment = catchAsync(async (req:Request,res:Response)=>{
     sendResponse(res,{
         statusCode:httpStatus.OK,
         success:true,
-        message:"Get all Assignment Successfull",
+        message:"delete assignment successfull",
         data:result
     });
 });

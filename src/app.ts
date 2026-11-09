@@ -21,6 +21,7 @@ import { DepartmentRouter } from "./app/module/department/department.route";
 import { ComplaintRouter } from "./app/module/complaint/complaint.route";
 import { categoryRouter } from "./app/module/category/category.route";
 import { AddAttchment } from "./app/module/attachment/attachment.route";
+import { AsiignementRouter } from "./app/module/assignment/assignment.route";
 
 const app: Application = express();
 
@@ -48,6 +49,7 @@ app.use("/api/department",DepartmentRouter);
 app.use("/api/complaint",ComplaintRouter);
 app.use("/api/category",categoryRouter);
 app.use("/api/addAttchment",AddAttchment);
+app.use("/api/assignment",AsiignementRouter);
 
 app.get("/test", async (req: Request, res: Response, next: NextFunction) => {
 	try {

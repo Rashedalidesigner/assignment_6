@@ -10,6 +10,7 @@ const getAllAssignment = async()=>{
 }
 
 const createAssignment = async (payload:IAssignment)=>{
+    console.log(payload);
     const {technicianId,compaintId,workStatus}= payload
     const assignmet = await prisma.assignment.create({
         data:{
