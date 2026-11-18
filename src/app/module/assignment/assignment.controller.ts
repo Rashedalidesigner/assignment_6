@@ -12,7 +12,8 @@ const getAllAssignment = catchAsync(async (req:Request,res:Response)=>{
         message:"Get all Assignment Successfull",
         data:result
     })
-})
+});
+
 const createAssignmet = catchAsync(async (req:Request,res:Response)=>{
     const user = req.user;
     if(user?.role!=="CITIZEN" && user?.role=="TECHNICIAN"){
@@ -26,7 +27,8 @@ const createAssignmet = catchAsync(async (req:Request,res:Response)=>{
         message:"create assignment successfull",
         data:result
     })
-})
+});
+
 const updateAssignment = catchAsync(async (req:Request,res:Response)=>{
     const user = req.user;
     const id = req.params?.id;
@@ -41,7 +43,8 @@ const updateAssignment = catchAsync(async (req:Request,res:Response)=>{
         message:"assignment updated successfull",
         data:result
     })
-})
+});
+
 const deleteAssignment = catchAsync(async (req:Request,res:Response)=>{
     const id = req.params?.id;
     const result = await assignmentService.deleteAssignment(id as unknown as string);
