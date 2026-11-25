@@ -10,7 +10,8 @@ import {
 	seedTesterTechnician,
 } from "./app/utils/seed";
 
-const PORT = config.port;
+const PORT = config.port||5000;
+// console.log(PORT);
 
 const main = async () => {
 	try {
