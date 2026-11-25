@@ -1,0 +1,16 @@
+enum AssignmentStatus {
+  ASSIGNED
+  IN_PROGRESS
+  ON_HOLD
+  RESOLVED
+  CLOSED
+  REJECTED
+  REOPENED
+}
+
+model Assignment {
+  id           String           @unique @default(ulid())
+  compaintId   String
+  technicianId String
+  workStatus   AssignmentStatus @default(ASSIGNED)
+}
