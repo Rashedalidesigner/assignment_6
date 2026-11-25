@@ -1,4 +1,4 @@
-import type { UserRole } from "../../../../prisma/generated/prisma/client";
+import type { UserRole } from "../../../../prisma/schema/generated/prisma/client";
 
 export interface ILoginUserPayload {
 	email: string;

@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import { Status, UserRole } from "../../../../prisma/generated/prisma/enums";
+import { Status, UserRole } from "../../../../prisma/schema/generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import { ITechnician, ItechnicianInfo } from "./technician.interface";
 import config from "../../config";

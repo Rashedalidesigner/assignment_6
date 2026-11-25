@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { UserRole } from "../../../../prisma/generated/prisma/enums";
+import { UserRole } from "../../../../prisma/schema/generated/prisma/enums";
 import { auth } from "../../middleware/checkAuth";
 import { validateRequest } from "../../middleware/validateRequest";
 import { AuthController } from "./auth.controller";

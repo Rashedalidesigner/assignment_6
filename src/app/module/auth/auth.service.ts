@@ -10,7 +10,7 @@ import {
   AuthProvider,
   UserRole,
   Status,
-} from "../../../../prisma/generated/prisma/enums";
+} from "../../../../prisma/schema/generated/prisma/enums";
 import config from "../../config";
 import { googleClient } from "../../lib/googleAuth";
 import { transporter } from "../../lib/nodemailer";

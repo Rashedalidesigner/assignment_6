@@ -1,4 +1,4 @@
-import { Status, UserRole } from "../../../../prisma/generated/prisma/enums";
+import { Status, UserRole } from "../../../../prisma/schema/generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import { Staff, VerifyPayload } from "./staff.interface";
 import { transporter } from "../../lib/nodemailer";

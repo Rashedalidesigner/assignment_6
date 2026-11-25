@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
-import { Prisma } from "../../../prisma/generated/prisma/client";
+import { Prisma } from "../../../prisma/schema/generated/prisma/client";
 import config from "../config";
 import { AppError } from "../utils/AppError";
 

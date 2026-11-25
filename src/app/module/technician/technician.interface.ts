@@ -1,4 +1,4 @@
-import { Status } from "../../../../prisma/generated/prisma/enums";
+import { Status } from "../../../../prisma/schema/generated/prisma/enums";
 import { IRegistercitizenPayload } from "../auth/auth.interface";
 
 export interface ITechnician extends IRegistercitizenPayload {

@@ -1,4 +1,4 @@
-import { DepartmentRole, Status, UserRole } from "../../../../prisma/generated/prisma/enums";
+import { DepartmentRole, Status, UserRole } from "../../../../prisma/schema/generated/prisma/enums";
 
 export interface Staff {
   id: string;

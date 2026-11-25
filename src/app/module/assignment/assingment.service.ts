@@ -1,4 +1,4 @@
-import { AssignmentStatus } from "../../../../prisma/generated/prisma/enums";
+import { AssignmentStatus } from "../../../../prisma/schema/generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import { IAssignment } from "./assignment.interface";
 

@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import httpStatus from "http-status";
-import { Status, UserRole } from "../../../prisma/generated/prisma/enums";
+import { Status, UserRole } from "../../../prisma/schema/generated/prisma/enums";
 import config from "../config";
 import { prisma } from "../lib/prisma";
 import { AppError } from "./AppError";

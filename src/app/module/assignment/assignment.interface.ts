@@ -1,4 +1,4 @@
-import { AssignmentStatus } from "../../../../prisma/generated/prisma/enums";
+import { AssignmentStatus } from "../../../../prisma/schema/generated/prisma/enums";
 
 export interface IAssignment {
     id:string;
